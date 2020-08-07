@@ -99,7 +99,7 @@ for i in RGPcounterurls:
             datastr=datastr.replace("\n", "")
             datastr=datastr.replace("  ", "")
             datastr=datastr.replace("\'", "\"")
-            datastr=datastr.replace("},};", "}}") #jesus wept it takes a lot to make this shitty json library happy
+            datastr=datastr.replace("},};", "}}") 
             #print datastr
 
     vardata = json.loads(datastr)
