@@ -174,8 +174,8 @@ for i in verticallifeurls:
     
 
 #dump data to terminal
-#for k in walls.keys():
-    #print k, walls[k].identifier, walls[k].count, "of", walls[k].capacity, walls[k].lastupdated, walls[k].city
+for k in walls.keys():
+    print k, walls[k].identifier, walls[k].count, "of", walls[k].capacity, walls[k].lastupdated, walls[k].city
     
     
     
