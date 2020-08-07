@@ -22,14 +22,28 @@ verticallifeurls=["https://gyms.vertical-life.info/en/the-climbing-works/counter
 
 Edenrockurls=["https://wallmarket.herokuapp.com/eden-rock-edinburgh/entries"]
 
-urlstart="https://portal.rockgympro.com/portal/public/"
-urlend="/occupancy"
 
+
+#let's have a list of the ones that are in the same place for convenient sorting/iterating purposes
+cities={"Sheffield":["Awesome Walls Sheffield","Foundry","Depot Climbing Sheffield"],
+        "Leeds":["Big Depot Leeds","Depot Leeds (Pudsey)"],
+        "Manchester":["Manchester Climbing Centre","Awesome Walls Stockport","Depot Manchester"],
+        "London":["CroyWall","Here Yonder","VauxWall East","HarroWall","RavensWall","VauxWall West","CanaryWall"],
+        "Bristol":["The Church","The Mothership"],
+        "Glasgow":["The Prop Store","The Newsroom"]
+    
+    
+    
+    }
+
+#^that should be the end of stuff that needs maintaining^
 
 #7/8/20 - the 3-letter id things are NOT unique. Arsecakes. Gonna have to store by full name.
 
 
 
+urlstart="https://portal.rockgympro.com/portal/public/"
+urlend="/occupancy"
 
 walls={}
 
@@ -42,6 +56,7 @@ class Wall:
         self.count=""           #the prize
         self.town=""            #can store city name so we can group and sort (not implemented)
         self.subLabel=""        #because it's there
+        self.city=""            #filled only if it's in the list above
 
     def barcolour(self): #return red, amber, or green
         if self.capacity==0:
@@ -115,6 +130,11 @@ for i in RGPcounterurls:
         a.count=vardata[j]["count"]
         a.subLabel=vardata[j]["subLabel"]
         a.lastupdated=vardata[j]["lastUpdate"].replace("&nbsp"," ")
+        for l in cities:
+            if a.fancyname in cities[l]:
+                a.city=l
+                #print l
+        
         
 
 
@@ -136,7 +156,10 @@ for i in Edenrockurls:
     a.count=cn.contents[0]
     a.lastupdated=""
     walls["Eden"]=a
-    
+    for l in cities:
+        if a.fancyname in cities[l]:
+            a.city=l
+
     
 
 for i in verticallifeurls:   
@@ -151,8 +174,8 @@ for i in verticallifeurls:
     
 
 #dump data to terminal
-for k in walls.keys():
-    print k, walls[k].identifier, walls[k].count, "of", walls[k].capacity, walls[k].lastupdated
+#for k in walls.keys():
+    #print k, walls[k].identifier, walls[k].count, "of", walls[k].capacity, walls[k].lastupdated, walls[k].city
     
     
     
@@ -218,10 +241,8 @@ sitecode+="</table></body></html>"
 wpage=open('site.html','w')
 wpage.write(sitecode)    
 wpage.close()    
-    
 
-
-
+       
 
     
     
