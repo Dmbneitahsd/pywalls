@@ -14,7 +14,10 @@ RGPcounterurls=["4f7e4c65977f6cd9be6d61308c7d7cc2", # Depot
                 "95faeefedaecb6935caa7958706f8249", # Flashpoint Swindon
                 "f5388d62ad88ab759edac8b861d585b7", # High Sports Brighton
                 "92d94d22394b00c6d3f6f2c90c402db1", # Awesome Walls
+                "36c3e9d55ad8d609357f9d6939538001", # *Spider
                 "51b34d29708b17d6270dbfee783f7375", # Here Yonder  !!! This one has no pretty name. needs a special case
+                "54b87fb64826bcff986b1c5700483d49", # Beacon !!! This one needs a special case
+                "7cd80b2fbe52e0f259c85fb2fce1140d", # Boulder hut !!! This one needs a special case
                 ]
                 
 verticallifeurls=["https://gyms.vertical-life.info/en/the-climbing-works/counter"]                
@@ -54,7 +57,6 @@ class Wall:
         self.capacity=""        #capacity
         self.lastupdated=""     #last update string
         self.count=""           #the prize
-        self.town=""            #can store city name so we can group and sort (not implemented)
         self.subLabel=""        #because it's there
         self.city=""            #filled only if it's in the list above
 
@@ -104,8 +106,16 @@ for i in RGPcounterurls:
         wid="AAA"
         nm="Foundry"          
         newwallids[wid] = nm          
-        
-        
+    if i=='54b87fb64826bcff986b1c5700483d49':#Here yonder has no option/value bit. Any others???
+        #print "Foundry"
+        wid="AAA"
+        nm="Beacon"          
+        newwallids[wid] = nm         
+    if i=='7cd80b2fbe52e0f259c85fb2fce1140d':#Here yonder has no option/value bit. Any others???
+        #print "Foundry"
+        wid="AAA"
+        nm="Boulder Hut"          
+        newwallids[wid] = nm         
 
     for dat in soup.find_all('script'):
         if (re.search('var(.*)};',dat.text,re.DOTALL)):
