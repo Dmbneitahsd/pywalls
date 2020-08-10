@@ -18,6 +18,7 @@ RGPcounterurls=["4f7e4c65977f6cd9be6d61308c7d7cc2", # Depot
                 "51b34d29708b17d6270dbfee783f7375", # Here Yonder  !!! This one has no pretty name. needs a special case
                 "54b87fb64826bcff986b1c5700483d49", # Beacon !!! This one needs a special case
                 "7cd80b2fbe52e0f259c85fb2fce1140d", # Boulder hut !!! This one needs a special case
+                "364a667ae76ba1630ee653d6a5c183d6", # The Climbing Experience !!! This one needs a special case
                 ]
                 
 verticallifeurls=["https://gyms.vertical-life.info/en/the-climbing-works/counter"]                
@@ -115,7 +116,11 @@ for i in RGPcounterurls:
         #print "Foundry"
         wid="AAA"
         nm="Boulder Hut"          
-        newwallids[wid] = nm         
+        newwallids[wid] = nm    
+    if i=='364a667ae76ba1630ee653d6a5c183d6':#Here yonder has no option/value bit. Any others???
+        wid="AAA"
+        nm="The Climbing Experience"          
+        newwallids[wid] = nm 
 
     for dat in soup.find_all('script'):
         if (re.search('var(.*)};',dat.text,re.DOTALL)):
