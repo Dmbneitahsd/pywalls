@@ -137,7 +137,7 @@ for i in RGPcounterurls:
     
     
     for j in newwallids.keys():
-        print j, newwallids[j]
+        print(j, newwallids[j])
         a=Wall(j)
         walls[newwallids[j]]=a
         a.fancyname=newwallids[j]
@@ -198,7 +198,7 @@ for i in verticallifeurls:
 
 #dump data to terminal
 for k in walls.keys():
-    print k, walls[k].identifier, walls[k].count, "of", walls[k].capacity, walls[k].lastupdated, walls[k].city
+    print(k, walls[k].identifier, walls[k].count, "of", walls[k].capacity, walls[k].lastupdated, walls[k].city)
     
     
     
