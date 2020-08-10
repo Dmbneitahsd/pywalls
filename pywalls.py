@@ -24,7 +24,8 @@ RGPcounterurls=["4f7e4c65977f6cd9be6d61308c7d7cc2", # Depot
 verticallifeurls=["https://gyms.vertical-life.info/en/the-climbing-works/counter"]                
 
 
-Edenrockurls=["https://wallmarket.herokuapp.com/eden-rock-edinburgh/entries"]
+Edenrockurls=["https://wallmarket.herokuapp.com/eden-rock-edinburgh/entries",
+              "https://wallmarket.herokuapp.com/eden-rock/entries"]
 
 
 
@@ -164,13 +165,20 @@ for i in Edenrockurls:
     cn=soup.find("h1", "display-4")
     ca=soup.find("small", "text-muted")
     #print cn.contents[0],"of",ca.contents[0].replace("/ ","")
-    a=Wall("Eden Rock")
-    a.fancyname="Eden Rock"
+    if (i=="https://wallmarket.herokuapp.com/eden-rock-edinburgh/entries"):
+            ename="Eden Rock Edinburgh"
+    
+    if (i=="https://wallmarket.herokuapp.com/eden-rock/entries"):
+            ename="Eden Rock Carlisle"
+    
+        
+    a=Wall(ename)
+    a.fancyname=ename
     a.identifier=j
     a.capacity=ca.contents[0].replace("/ ","")
     a.count=cn.contents[0]
     a.lastupdated=""
-    walls["Eden"]=a
+    walls[ename]=a
     for l in cities:
         if a.fancyname in cities[l]:
             a.city=l
