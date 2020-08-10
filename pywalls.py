@@ -18,12 +18,14 @@ RGPcounterurls=["4f7e4c65977f6cd9be6d61308c7d7cc2", # Depot
                 "51b34d29708b17d6270dbfee783f7375", # Here Yonder  !!! This one has no pretty name. needs a special case
                 "54b87fb64826bcff986b1c5700483d49", # Beacon !!! This one needs a special case
                 "7cd80b2fbe52e0f259c85fb2fce1140d", # Boulder hut !!! This one needs a special case
+                "364a667ae76ba1630ee653d6a5c183d6", # The Climbing Experience !!! This one needs a special case
                 ]
                 
 verticallifeurls=["https://gyms.vertical-life.info/en/the-climbing-works/counter"]                
 
 
-Edenrockurls=["https://wallmarket.herokuapp.com/eden-rock-edinburgh/entries"]
+Edenrockurls=["https://wallmarket.herokuapp.com/eden-rock-edinburgh/entries",
+              "https://wallmarket.herokuapp.com/eden-rock/entries"]
 
 
 
@@ -115,7 +117,11 @@ for i in RGPcounterurls:
         #print "Foundry"
         wid="AAA"
         nm="Boulder Hut"          
-        newwallids[wid] = nm         
+        newwallids[wid] = nm    
+    if i=='364a667ae76ba1630ee653d6a5c183d6':#Here yonder has no option/value bit. Any others???
+        wid="AAA"
+        nm="The Climbing Experience"          
+        newwallids[wid] = nm 
 
     for dat in soup.find_all('script'):
         if (re.search('var(.*)};',dat.text,re.DOTALL)):
@@ -131,7 +137,7 @@ for i in RGPcounterurls:
     
     
     for j in newwallids.keys():
-        print j, newwallids[j]
+        print(j, newwallids[j])
         a=Wall(j)
         walls[newwallids[j]]=a
         a.fancyname=newwallids[j]
@@ -159,13 +165,20 @@ for i in Edenrockurls:
     cn=soup.find("h1", "display-4")
     ca=soup.find("small", "text-muted")
     #print cn.contents[0],"of",ca.contents[0].replace("/ ","")
-    a=Wall("Eden Rock")
-    a.fancyname="Eden Rock"
+    if (i=="https://wallmarket.herokuapp.com/eden-rock-edinburgh/entries"):
+            ename="Eden Rock Edinburgh"
+    
+    if (i=="https://wallmarket.herokuapp.com/eden-rock/entries"):
+            ename="Eden Rock Carlisle"
+    
+        
+    a=Wall(ename)
+    a.fancyname=ename
     a.identifier=j
     a.capacity=ca.contents[0].replace("/ ","")
     a.count=cn.contents[0]
     a.lastupdated=""
-    walls["Eden"]=a
+    walls[ename]=a
     for l in cities:
         if a.fancyname in cities[l]:
             a.city=l
@@ -185,7 +198,7 @@ for i in verticallifeurls:
 
 #dump data to terminal
 for k in walls.keys():
-    print k, walls[k].identifier, walls[k].count, "of", walls[k].capacity, walls[k].lastupdated, walls[k].city
+    print(k, walls[k].identifier, walls[k].count, "of", walls[k].capacity, walls[k].lastupdated, walls[k].city)
     
     
     
