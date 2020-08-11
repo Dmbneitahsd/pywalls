@@ -1,2 +1,2 @@
-google-cloud-bigquery==1.26.1
-beautifulsoup4==4.9.1
+google-cloud-bigquery>=1.26.1
+beautifulsoup4>=4.9.1

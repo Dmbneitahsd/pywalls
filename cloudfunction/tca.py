@@ -25,14 +25,14 @@ def pagefetch():
 
     #find all the scripts on the page
     for dat in soup.find_all('script'):
-    #look for the one we are interested in
-    #define the regex to only match the bit which is useful
-    regex = r"var data(.*)},    };"
-    #change the object into a string for searching
-    usefulbits = str(dat)
+        #look for the one we are interested in
+        #define the regex to only match the bit which is useful
+        regex = r"var data(.*)},    };"
+        #change the object into a string for searching
+        usefulbits = str(dat)
     
-    #just pull out the bit we need
-    matches = re.search(regex, usefulbits, re.DOTALL | re.IGNORECASE)
+        #just pull out the bit we need
+        matches = re.search(regex, usefulbits, re.DOTALL | re.IGNORECASE)
     #sort it out into usable format
     if matches:
         datastr=matches.group(0).replace("var data = ","")
@@ -44,9 +44,9 @@ def pagefetch():
         jsondata = json.loads(datastr)
         jsondata.update(timestamp)
         
-return jsondata
+    return jsondata
 
-def database_insert(jsondata)
+def database_insert(jsondata):
     from google.cloud import bigquery
     import io
     #i had terrible trouble getting bq to accept it as a string, so stream to a file like object first
