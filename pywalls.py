@@ -1,6 +1,7 @@
 #!/usr/bin/python
 from __future__ import division
 import requests
+from requests_html import HTMLSession
 from bs4 import BeautifulSoup
 import re
 import json
@@ -139,7 +140,7 @@ for i in RGPcounterurls:
   
     
     for j in newwallids.keys():
-        print(j, newwallids[j])
+        #print(j, newwallids[j])
         a=Wall(j)
         walls[newwallids[j]]=a
         a.fancyname=newwallids[j]
@@ -188,14 +189,31 @@ for i in Edenrockurls:
     
 
 for i in verticallifeurls:   
-    #ugh. where's the number?
-    geturl=i
-    page = requests.get(geturl).text
-    soup=BeautifulSoup(page, 'html.parser')
-    #print soup
-    
-    #can't find the data here. Help?
-    
+    #cracked it. shityeah:
+    session = HTMLSession()
+    r = session.get(i)
+    r.html.render()
+    soup=BeautifulSoup(r.html.html, 'html.parser')  #why you gotta say it twice??? dunno but you do.
+
+    cnt=soup.find("span","display-1").contents[0]
+    cap=soup.find("span","display-4").contents[0].replace("/","")
+    tm=soup.find_all("div","small")
+    lastactivity=soup.find_all("div","small")
+    wname="The Climbing Works"
+    a=Wall(wname)
+    a.identifier="WKS"
+    a.fancyname=wname
+    a.capacity=cap
+    a.count=cnt
+    a.lastupdated=tm[0].contents[0]+" "+tm[1].contents[0]
+    walls[wname]=a
+
+
+
+
+
+
+
     
 bigfatjson={}
 #dump data to terminal
