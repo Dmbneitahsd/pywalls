@@ -124,17 +124,19 @@ for i in RGPcounterurls:
         newwallids[wid] = nm 
 
     for dat in soup.find_all('script'):
-        if (re.search('var(.*)};',dat.text,re.DOTALL)):
-            x=re.search('var(.*?)};',dat.text,re.DOTALL)    
-            datastr=x.group(0).replace("var data = ","")
+        
+        regex=r"var(.*)}"
+        matches=re.search('var(.*?)};',str(dat),re.DOTALL | re.IGNORECASE)
+        if matches:           
+            datastr=matches.group(0).replace("var data = ","")
             datastr=datastr.replace("\n", "")
             datastr=datastr.replace("  ", "")
             datastr=datastr.replace("\'", "\"")
             datastr=datastr.replace("},};", "}}") 
             #print datastr
 
-    vardata = json.loads(datastr)
-    
+            vardata = json.loads(datastr)
+  
     
     for j in newwallids.keys():
         print(j, newwallids[j])
@@ -195,12 +197,15 @@ for i in verticallifeurls:
     #can't find the data here. Help?
     
     
-
+jsondict={}
 #dump data to terminal
 for k in walls.keys():
     print(k, walls[k].identifier, walls[k].count, "of", walls[k].capacity, walls[k].lastupdated, walls[k].city)
-    
-    
+    jsondict[k]=walls[k].__dict__
+    #print(json.dumps(walls[k].__dict__))
+
+
+print(json.dumps(jsondict))    
     
 #going off piste now. Beyond here is just spitting out a webpage for testing. bits of it may come in useful.  
     
@@ -269,3 +274,4 @@ wpage.close()
 
     
     
+ 
