@@ -200,7 +200,7 @@ for i in verticallifeurls:
 bigfatjson={}
 #dump data to terminal
 for k in walls.keys():
-    print(k, walls[k].identifier, walls[k].count, "of", walls[k].capacity, walls[k].lastupdated, walls[k].city)
+    #print(k, walls[k].identifier, walls[k].count, "of", walls[k].capacity, walls[k].lastupdated, walls[k].city)
     bigfatjson[k]=walls[k].__dict__
     #print(json.dumps(walls[k].__dict__))
 
