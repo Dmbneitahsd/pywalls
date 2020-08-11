@@ -197,15 +197,15 @@ for i in verticallifeurls:
     #can't find the data here. Help?
     
     
-jsondict={}
+bigfatjson={}
 #dump data to terminal
 for k in walls.keys():
     print(k, walls[k].identifier, walls[k].count, "of", walls[k].capacity, walls[k].lastupdated, walls[k].city)
-    jsondict[k]=walls[k].__dict__
+    bigfatjson[k]=walls[k].__dict__
     #print(json.dumps(walls[k].__dict__))
 
 
-print(json.dumps(jsondict))    
+print(json.dumps(bigfatjson, indent=4, sort_keys=True))    
     
 #going off piste now. Beyond here is just spitting out a webpage for testing. bits of it may come in useful.  
     
