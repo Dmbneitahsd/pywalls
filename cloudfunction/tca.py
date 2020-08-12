@@ -15,6 +15,7 @@ def pagefetch():
     
     #visit the page and fetch the data for munging
     page = requests.get(geturl).text
+    print(requests.get(geturl).status_code)
 
     #timestamp
     today = datetime.now()
@@ -22,7 +23,10 @@ def pagefetch():
 
     #read that data in
     soup=BeautifulSoup(page, 'html.parser')
-
+    
+    for opt in soup.find_all('option'):
+        print(opt.get('value'), opt.get('text'))
+    
     #find all the scripts on the page
     for dat in soup.find_all('script'):
         #look for the one we are interested in
@@ -33,18 +37,17 @@ def pagefetch():
     
         #just pull out the bit we need
         matches = re.search(regex, usefulbits, re.DOTALL | re.IGNORECASE)
-    #sort it out into usable format
-    if matches:
-        datastr=matches.group(0).replace("var data = ","")
-        datastr=datastr.replace("\n", "")
-        datastr=datastr.replace("  ", "")
-        datastr=datastr.replace("\'", "\"")
-        datastr=datastr.replace("},};", "}}") 
+        if matches:
+            datastr=matches.group(0).replace("var data = ","")
+            datastr=datastr.replace("\n", "")
+            datastr=datastr.replace("  ", "")
+            datastr=datastr.replace("\'", "\"")
+            datastr=datastr.replace("},};", "}}") 
         
-        jsondata = json.loads(datastr)
-        jsondata.update(timestamp)
+            jsondata = json.loads(datastr)
+            jsondata.update(timestamp)
         
-    return jsondata
+            return jsondata
 
 def database_insert(jsondata):
     from google.cloud import bigquery
@@ -88,4 +91,5 @@ def hello_world(request):
         return request_json['message']
     else:
         results = pagefetch()
-        database_insert(results)
+        return database_insert(results)
+        
